@@ -1,5 +1,11 @@
 import React, { useState } from 'react';
-import { TextField, Button, Box, Typography } from '@mui/material';
+import {
+  TextField,
+  Button,
+  Box,
+  Typography,
+  Grid,
+} from '@mui/material';
 
 function AddQuestion({ onAdd }) {
   const [questionLabel, setQuestionLabel] = useState('');
@@ -11,6 +17,7 @@ function AddQuestion({ onAdd }) {
     newOptions[index][e.target.name] = e.target.value;
     setOptions(newOptions);
   };
+
   const handleAddOption = () => setOptions([...options, { value: '', url: '' }]);
 
   const handleRemoveOption = (index) => setOptions(options.filter((_, i) => i !== index));
@@ -33,7 +40,18 @@ function AddQuestion({ onAdd }) {
   };
 
   return (
-    <Box component="form" onSubmit={handleSubmit} sx={{ p: 4, border: '1px solid #ddd', borderRadius: 2, mb: 4 }}>
+    <Box
+      component="form"
+      onSubmit={handleSubmit}
+      sx={{
+        p: 4,
+        border: '1px solid #ddd',
+        borderRadius: 2,
+        mb: 4,
+        maxWidth: 800,
+        mx: 'auto',
+      }}
+    >
       <Typography variant="h6">Add a New Question</Typography>
       <TextField
         fullWidth
@@ -44,37 +62,49 @@ function AddQuestion({ onAdd }) {
         required
         sx={{ mt: 2, mb: 2 }}
       />
-      {options.map((option, index) => (
-        <Box key={index} sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 2 }}>
-          <TextField
-            label="Value"
-            name="value"
-            variant="outlined"
-            value={option.value}
-            onChange={(e) => handleOptionChange(index, e)}
-            required
-            fullWidth
-          />
-          <TextField
-            label="URL"
-            name="url"
-            variant="outlined"
-            value={option.url}
-            onChange={(e) => handleOptionChange(index, e)}
-            required
-            fullWidth
-          />
-          <Button color="error" variant="contained" onClick={() => handleRemoveOption(index)}>
-            Remove
+      <Grid container spacing={2}>
+        {options.map((option, index) => (
+          <Grid key={index} item xs={12} sm={6} md={6} lg={6}>
+            <Box sx={{ mb: 2 }}> {/* Added margin bottom to the container */}
+              <TextField
+                label="Value"
+                name="value"
+                variant="outlined"
+                value={option.value}
+                onChange={(e) => handleOptionChange(index, e)}
+                required
+                fullWidth
+                sx={{ mb: 1 }} // Margin bottom for spacing between fields on small screens
+              />
+              <TextField
+                label="URL (Optional)"
+                name="url"
+                variant="outlined"
+                value={option.url}
+                onChange={(e) => handleOptionChange(index, e)}
+                fullWidth
+              />
+              <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 1 }}> {/* Position button to the right */}
+                <Button color="error" variant="contained" onClick={() => handleRemoveOption(index)} size="small">
+                  Remove
+                </Button>
+              </Box>
+            </Box>
+          </Grid>
+        ))}
+      </Grid>
+      <Grid container spacing={2} justifyContent="center">
+        <Grid item xs={12} sm={6} md={4}>
+          <Button variant="outlined" fullWidth onClick={handleAddOption} sx={{ mt: 2 }}>
+            Add Option
           </Button>
-        </Box>
-      ))}
-      <Button variant="outlined" onClick={handleAddOption} sx={{ mt: 2 }}>
-        Add Option
-      </Button>
-      <Button type="submit" variant="contained" color="primary" sx={{ mt: 2 }}>
-        {loading ? 'Adding...' : 'Submit'}
-      </Button>
+        </Grid>
+        <Grid item xs={12} sm={6} md={4}>
+          <Button type="submit" variant="contained" color="primary" fullWidth sx={{ mt: 2 }}>
+            {loading ? 'Adding...' : 'Submit'}
+          </Button>
+        </Grid>
+      </Grid>
     </Box>
   );
 }
