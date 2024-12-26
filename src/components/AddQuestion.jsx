@@ -11,7 +11,6 @@ function AddQuestion({ onAdd }) {
     newOptions[index][e.target.name] = e.target.value;
     setOptions(newOptions);
   };
-
   const handleAddOption = () => setOptions([...options, { value: '', url: '' }]);
 
   const handleRemoveOption = (index) => setOptions(options.filter((_, i) => i !== index));

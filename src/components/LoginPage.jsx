@@ -9,7 +9,7 @@ function LoginPage() {
   const [password, setPassword] = useState('');
   const [admintoken, setAdmintoken] = useState('');
   const [error, setError] = useState('');
-  const [isCreateAccount, setIsCreateAccount] = useState(false);  // Toggle between login and create account
+  const [isCreateAccount, setIsCreateAccount] = useState(false); 
   const navigate = useNavigate();
   const { login } = useAuth();
 
