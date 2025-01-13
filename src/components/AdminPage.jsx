@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import {
   Container,
   Box,
@@ -35,16 +35,7 @@ function AdminPage() {
   const [snackbarMessage, setSnackbarMessage] = useState('');
   const [snackbarSeverity, setSnackbarSeverity] = useState('success');
 
-
-  useEffect(() => {
-    if (!token) {
-      navigate('/login');
-      return;
-    }
-    fetchQuestions();
-  }, [token, navigate]);
-
-  const fetchQuestions = async () => {
+  const fetchQuestions = useCallback(async () => {
     try {
       setLoading(true);
       setError(null);
@@ -59,7 +50,15 @@ function AdminPage() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [token, logout, navigate]);
+
+  useEffect(() => {
+    if (!token) {
+      navigate('/login');
+      return;
+    }
+    fetchQuestions();
+  }, [token, navigate, fetchQuestions]);
 
   const showSnackbar = (message, severity = 'success') => {
     setSnackbarMessage(message);

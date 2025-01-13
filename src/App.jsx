@@ -7,7 +7,7 @@ import theme from './theme';
 import HomePage from './components/HomePage';
 import LoginPage from './components/LoginPage';
 import AdminPage from './components/AdminPage';
-import InvitePage from './components/InvitePage';
+import GuestPage from './components/GuestPage';
 import Navigation from './components/Navigation';
 import { AuthProvider } from './contexts/AuthContext';
 
@@ -27,7 +27,7 @@ function App() {
                     <AdminPage />
                 } 
               />
-              <Route path="/invite" element={<InvitePage />} />
+              <Route path="/guest" element={<GuestPage />} />
               <Route path="*" element={<Navigate to="/" />} />
             </Routes>
           </Container>

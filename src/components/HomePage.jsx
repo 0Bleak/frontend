@@ -16,7 +16,7 @@ function HomePage() {
           gap: 3 
         }}>
           <Typography variant="h3" component="h1" gutterBottom>
-            Welcome to UPPA Forum
+            Welcome to feedback assist
           </Typography>
           <Typography variant="h6" color="text.secondary" align="center" paragraph>
             Choose your destination to get started
